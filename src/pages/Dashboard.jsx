@@ -1205,8 +1205,8 @@ const Dashboard = () => {
       setShowFolderModal(false);
       fetchData();
       addToast("Folder created!", "success");
-    } catch {
-      addToast("Failed to create folder", "error");
+    } catch (err) {
+      addToast(err.response?.data?.error || "Failed to create folder", "error");
     }
   };
 
@@ -1266,8 +1266,9 @@ const Dashboard = () => {
       await api.put(`/files/rename/${renameItem.id}`, { newName });
       fetchData();
       addToast("Renamed successfully!", "success");
-    } catch {
-      addToast("Rename failed", "error");
+    } catch (err) {
+      // Error message backend se aayega
+      addToast(err.response?.data?.error || "Rename failed", "error");
     } finally {
       setRenameItem(null);
     }
@@ -1403,7 +1404,18 @@ const Dashboard = () => {
     <>
       <div className="px-5 py-4 flex items-center gap-2.5 border-b border-gray-50">
         <div className="w-8 h-8 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-xl flex items-center justify-center shadow-lg shadow-blue-200">
-          <HardDrive size={16} className="text-white" />
+          <svg
+            width="18"
+            height="18"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="white"
+            strokeWidth="2.5"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          >
+            <path d="M3 15a4 4 0 004 4h9a5 5 0 10-4.9-6H7a4 4 0 00-4 2z" />
+          </svg>
         </div>
         <span className="text-lg font-black text-gray-900 tracking-tight">
           CloudVault
@@ -1416,9 +1428,30 @@ const Dashboard = () => {
             setShowFolderModal(true);
             setSidebarOpen(false);
           }}
-          className="flex items-center gap-2 w-full px-3 py-2.5 rounded-xl font-semibold text-sm bg-blue-600 text-white hover:bg-blue-700 transition shadow-md shadow-blue-200"
+          className="flex items-center gap-2 w-full px-3 py-2.5 rounded-xl font-semibold text-sm bg-blue-600 text-white hover:bg-blue-700 transition shadow-md shadow-blue-200 group"
         >
-          <FolderPlus size={16} /> New Folder
+          <div className="w-6 h-6 rounded-lg bg-blue-500 group-hover:bg-white/20 flex items-center justify-center transition-all duration-300">
+            <svg
+              width="14"
+              height="14"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="white"
+              strokeWidth="2.5"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              className="transition-transform duration-300 group-hover:-rotate-12"
+            >
+              <path d="M22 19a2 2 0 01-2 2H4a2 2 0 01-2-2V5a2 2 0 012-2h5l2 3h9a2 2 0 012 2z" />
+              <line x1="12" y1="11" x2="12" y2="17" />
+              <line x1="9" y1="14" x2="15" y2="14" />
+            </svg>
+          </div>
+          {/* <FolderPlus
+            size={16}
+            className="transition-transform duration-300 group-hover:-rotate-12"
+          />{" "} */}
+          New Folder
         </button>
         <button
           onClick={() => {
