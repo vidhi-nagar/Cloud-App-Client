@@ -1062,6 +1062,7 @@ const Dashboard = () => {
 
       if (activeTab === "shared") {
         const sharedRes = await api.get("/files/shared-with-me");
+        const statsRes = await api.get("/files/storage-stats");
         setSharedFiles(sharedRes.data.sharedFiles || []);
         setStats(await api.get("/files/storage-stats").then((r) => r.data));
         setStats(statsRes.data);
