@@ -240,13 +240,13 @@ const UploadModal = ({
             <p
               className={`font-bold text-sm ${isDraggingInModal ? "text-blue-600" : "text-gray-500"}`}
             >
-              {isDraggingInModal ? "🎯 Chhod do!" : "File yahan drag karo"}
+              {isDraggingInModal ? "🎯 Drop Here!" : "Drag File Here"}
             </p>
 
             <p className="text-xs text-gray-300 mt-1">
               {isDraggingInModal
                 ? "Release to upload"
-                : "Desktop se file uthao aur yahan drop karo"}
+                : "Pick file from Desktop and drop it here"}
             </p>
           </div>
         </div>
@@ -265,7 +265,7 @@ const UploadModal = ({
           onClick={() => modalFileRef.current?.click()}
           className="w-full py-3 bg-blue-600 text-white font-bold rounded-xl hover:bg-blue-700 active:scale-95 transition-all text-sm shadow-lg shadow-blue-200 flex items-center justify-center gap-2"
         >
-          <Upload size={16} /> Computer se Select Karo
+          <Upload size={16} /> Select from Computer
         </button>
 
         {/* Progress */}

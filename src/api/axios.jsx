@@ -6,7 +6,7 @@ const api = axios.create({
     "https://cloud-app-server-ae7x.onrender.com/api", // Aapka live backend URL
 });
 
-// Auth token ko har request mein headers mein bhejne ke liye interceptor
+
 api.interceptors.request.use((config) => {
   const token = localStorage.getItem("token");
   if (token) {
