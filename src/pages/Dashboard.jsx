@@ -1024,6 +1024,17 @@ const Dashboard = () => {
         if (reset) setLoading(true);
         else setIsFetchingMore(true);
 
+        if (activeTab === "shared") {
+          const sharedRes = await api.get("/files/shared-with-me");
+          const statsRes = await api.get("/files/storage-stats");
+          setSharedFiles(sharedRes.data.sharedFiles || []);
+          setStats(await api.get("/files/storage-stats").then((r) => r.data));
+          setStats(statsRes.data);
+          setLoading(false); // 👈 finally se pehle manually set karo
+          setIsFetchingMore(false);
+          return;
+        }
+
         // Page ko ref se lo, state se nahi
         const currentOffset = reset ? 0 : pageRef.current * LIMIT;
 
@@ -1059,18 +1070,6 @@ const Dashboard = () => {
         setLoading(false);
         setIsFetchingMore(false);
       }
-
-      if (activeTab === "shared") {
-        const sharedRes = await api.get("/files/shared-with-me");
-        const statsRes = await api.get("/files/storage-stats");
-        setSharedFiles(sharedRes.data.sharedFiles || []);
-        setStats(await api.get("/files/storage-stats").then((r) => r.data));
-        setStats(statsRes.data);
-        setLoading(false); // 👈 finally se pehle manually set karo
-        setIsFetchingMore(false);
-        return;
-      }
-      const currentOffset = reset ? 0 : pageRef.current * LIMIT;
     },
     [currentFolderId, activeTab, sortBy, filterType],
   );
